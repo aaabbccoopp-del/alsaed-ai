@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="description" content="السعيد AI — مساعدك الذكي الشخصي، تطوير أحمد سعيد"/>
+  <meta name="theme-color" content="#4f6ef7"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="السعيد AI"/>
+  <meta property="og:title" content="السعيد AI"/>
+  <meta property="og:description" content="مساعدك الذكي الشخصي — تطوير أحمد سعيد"/>
+  <meta property="og:image" content="avatar.png"/>
+  <title>السعيد AI</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="avatar.png"/>
+  <link rel="icon" type="image/png" href="avatar.png"/>
+</head>
+<body>
+
+  <!-- ═══ SPLASH SCREEN ═══ -->
+  <div id="splashScreen">
+    <img src="avatar.png" alt="السعيد AI" class="splash-logo"/>
+    <div class="splash-title">السعيد AI</div>
+    <div class="splash-sub">مساعدك الذكي الشخصي ✨</div>
+    <div class="splash-loader"></div>
+  </div>
+
+  <!-- ═══ PWA INSTALL BANNER ═══ -->
+  <div class="install-banner" id="installBanner">
+    <img src="avatar.png" alt="AI" class="install-logo"/>
+    <div class="install-text">
+      <div class="install-title">ثبّت السعيد AI على جهازك!</div>
+      <div class="install-sub">وصول سريع • يعمل بدون إنترنت</div>
+    </div>
+    <button class="btn-install" id="btnInstall">تثبيت</button>
+    <button class="btn-install-close" id="btnInstallClose" title="إغلاق">✕</button>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app-layout">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon"><img src="avatar.png" alt="السعيد AI" class="brand-avatar"/></div>
+          <div class="brand-text">
+            <span class="brand-name">السعيد AI</span>
+            <span class="brand-sub">مساعدك الذكي ✨</span>
+          </div>
+        </div>
+        <button class="sidebar-close btn-icon" id="sidebarClose" title="إغلاق">✕</button>
+      </div>
+
+      <div class="sidebar-body">
+        <button class="btn-new-chat" id="btnNewChat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          محادثة جديدة
+        </button>
+        <div class="sessions-list" id="sessionsList">
+          <div class="sessions-empty" id="sessionsEmpty">
+            <span style="font-size:26px">💬</span>
+            <span>لا توجد محادثات بعد</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="dev-credit">👨‍💻 تطوير أحمد سعيد &copy; 2025</div>
+      </div>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="main">
+
+      <!-- Header -->
+      <header class="header">
+        <button class="btn-icon" id="btnMenuToggle" title="القائمة (Ctrl+B)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <div class="header-center">
+          <span class="header-title" id="headerTitle">السعيد AI</span>
+          <span class="status-dot"></span>
+        </div>
+
+        <div class="header-actions">
+          <!-- بحث -->
+          <button class="btn-icon" id="btnSearch" title="بحث (Ctrl+K)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <!-- مشاركة -->
+          <button class="btn-icon" id="btnShareChat" title="مشاركة المحادثة">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <!-- إحصائيات -->
+          <button class="btn-icon" id="btnStats" title="الإحصائيات">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </button>
+          <!-- إعدادات -->
+          <button class="btn-icon" id="btnSettings" title="الإعدادات">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+          <!-- مكالمة -->
+          <button class="btn-call" id="btnCall" title="مكالمة صوتية">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 5.53 5.53l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            مكالمة
+          </button>
+          <!-- ثيم -->
+          <button class="btn-icon" id="btnTheme" title="تغيير المظهر">
+            <svg id="iconTheme" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages -->
+      <div class="messages-area" id="messagesArea" style="position:relative;">
+
+        <!-- Welcome -->
+        <div class="welcome" id="welcomeScreen">
+          <div class="welcome-avatar-wrap">
+            <div class="avatar-rings">
+              <div class="aring a1"></div><div class="aring a2"></div><div class="aring a3"></div>
+            </div>
+            <img src="avatar.png" alt="السعيد AI" class="welcome-avatar"/>
+          </div>
+          <h2 class="welcome-title" id="welcomeTitle"></h2>
+          <p class="welcome-sub">
+            اسألني عن أي شيء — شرح مفاهيم 📚، كتابة إبداعية ✍️، برمجة 💻<br>
+            أو ابدأ <strong>مكالمة صوتية</strong> للتحدث معي مباشرةً 🎙️
+          </p>
+          <button class="btn-voice-call-big" id="btnVoiceCallBig">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 5.53 5.53l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            ابدأ مكالمة صوتية مع السعيد
+          </button>
+          <div class="quick-prompts" id="quickPrompts">
+            <button class="quick-btn" data-prompt="من طورك؟ من برمجك؟">🤔 من طورك؟</button>
+            <button class="quick-btn" data-prompt="اشرح لي الذكاء الاصطناعي ببساطة">🧠 اشرح الذكاء الاصطناعي</button>
+            <button class="quick-btn" data-prompt="اكتب لي قصيدة عربية جميلة عن الأمل">✍️ اكتب قصيدة</button>
+            <button class="quick-btn" data-prompt="ما هي أفضل 5 نصائح لإدارة الوقت؟">⏰ إدارة الوقت</button>
+            <button class="quick-btn" data-prompt="اكتب كود Python لطباعة جدول الضرب">💻 مثال برمجي</button>
+            <button class="quick-btn" data-prompt="__contact__">📱 تواصل مع المطور</button>
+          </div>
+        </div>
+
+        <div class="messages-list" id="messagesList"></div>
+
+        <!-- زر الرجوع للأسفل -->
+        <button class="btn-scroll-bottom" id="btnScrollBottom" title="الأسفل">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-box">
+          <textarea id="userInput" class="input-textarea" placeholder="اكتب رسالتك... (Enter للإرسال، Shift+Enter سطر جديد)" rows="1"></textarea>
+          <div class="input-actions">
+            <button class="btn-stop" id="btnStop" title="إيقاف">⏹ إيقاف</button>
+            <button class="btn-mic" id="btnMic" title="إدخال صوتي 🎤">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+            <button class="btn-send" id="btnSend" disabled title="إرسال (Enter)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="input-footer">
+          <p class="input-disclaimer">السعيد AI قد يرتكب أخطاء — تحقق من المعلومات المهمة 💡</p>
+          <span class="char-count" id="charCount"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ VOICE CALL OVERLAY ═══ -->
+  <div class="call-overlay" id="callOverlay">
+    <div class="call-bg"></div>
+    <div class="call-ui">
+      <div class="call-avatar-wrap">
+        <div class="call-ring cr1"></div><div class="call-ring cr2"></div><div class="call-ring cr3"></div>
+        <img src="avatar.png" alt="السعيد AI" class="call-avatar" id="callAvatar"/>
+      </div>
+      <div class="call-name">السعيد AI</div>
+      <div class="call-status" id="callStatus">جاري الاتصال...</div>
+      <div class="call-transcript" id="callTranscript">
+        <div class="transcript-bubble ai-bubble-call" id="transcriptAI"></div>
+        <div class="transcript-bubble user-bubble-call" id="transcriptUser"></div>
+      </div>
+      <div class="call-wave" id="callWave">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div class="call-timer" id="callTimer">00:00</div>
+      <div class="call-controls">
+        <button class="ctrl-btn mute-btn" id="btnMute" title="كتم">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button class="ctrl-btn end-btn" id="btnEndCall" title="إنهاء">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 2 2 0 0 1-.45-2.11c.188-.47.34-.954.45-1.45M2 2l20 20"/><path d="M10.68 13.31A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11l-.94.94"/></svg>
+        </button>
+        <button class="ctrl-btn speaker-btn" id="btnSpeaker" title="مكبر الصوت">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WhatsApp Modal ═══ -->
+  <div class="modal-overlay" id="waModal">
+    <div class="modal">
+      <div class="modal-icon">
+        <div class="wa-icon-wrap">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </div>
+      </div>
+      <h3 class="modal-title">تواصل مع المطور 👨‍💻</h3>
+      <p class="modal-msg">هل تريد التواصل مع <strong>أحمد سعيد</strong> مطور السعيد AI مباشرةً عبر واتساب؟</p>
+      <a id="waLink" href="#" target="_blank" rel="noopener" class="btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        فتح واتساب الآن 🚀
+      </a>
+      <button class="btn-modal-close" id="waModalClose">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- ═══ لوحة البحث ═══ -->
+  <div class="side-panel" id="searchPanel">
+    <div class="panel-header">
+      <span class="panel-title">🔍 البحث</span>
+      <button class="panel-close" id="searchClose">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="search-box">
+        <input type="search" class="search-input" id="searchInput" placeholder="ابحث في كل محادثاتك..." autocomplete="off"/>
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- ═══ لوحة الإعدادات ═══ -->
+  <div class="side-panel" id="settingsPanel">
+    <div class="panel-header">
+      <span class="panel-title">⚙️ الإعدادات</span>
+      <button class="panel-close" onclick="document.getElementById('settingsPanel').classList.remove('open')">✕</button>
+    </div>
+    <div class="panel-body">
+
+      <div class="settings-section">
+        <span class="settings-label">حجم الخط</span>
+        <div class="btn-group-sm">
+          <button class="btn-opt" data-font-size="sm">صغير</button>
+          <button class="btn-opt active" data-font-size="md">متوسط</button>
+          <button class="btn-opt" data-font-size="lg">كبير</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">كثافة الرسائل</span>
+        <div class="btn-group-sm">
+          <button class="btn-opt" data-density="compact">مضغوط</button>
+          <button class="btn-opt active" data-density="comfortable">مريح</button>
+          <button class="btn-opt" data-density="spacious">واسع</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">لون التمييز</span>
+        <div class="color-picker-row">
+          <input type="color" id="accentPicker" value="#4f6ef7" title="اختر لوناً"/>
+          <span style="font-size:12px;color:var(--fg3)">لون الواجهة الأساسي</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">الصوت</span>
+        <div class="settings-row">
+          <span class="settings-key">تفعيل النطق الصوتي</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="ttsToggle" checked/>
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <span class="settings-key">سرعة الصوت: <span id="voiceRateVal">1.0x</span></span>
+        </div>
+        <input type="range" class="slider" id="voiceRateSlider" min="0.5" max="2" step="0.1" value="1"/>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">عام</span>
+        <div class="settings-row">
+          <span class="settings-key">تسمية تلقائية للمحادثات</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="autoTitleToggle" checked/>
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="settings-label">بيانات</span>
+        <button class="btn-danger" id="btnClearAll">🗑️ حذف كل المحادثات والإعدادات</button>
+      </div>
+
+      <div class="settings-section" style="margin-top:8px;text-align:center;">
+        <span style="font-size:11px;color:var(--fg3)">
+          اختصارات: <strong>Ctrl+K</strong> بحث · <strong>Ctrl+N</strong> محادثة جديدة · <strong>Ctrl+B</strong> قائمة · <strong>Esc</strong> إغلاق
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ لوحة الإحصائيات ═══ -->
+  <div class="side-panel" id="statsPanel">
+    <div class="panel-header">
+      <span class="panel-title">📊 إحصائياتك</span>
+      <button class="panel-close" onclick="document.getElementById('statsPanel').classList.remove('open')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="stats-grid" id="statsContent"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="storage.js"></script>
+  <script src="markdown.js"></script>
+  <script src="theme.js"></script>
+  <script src="ui.js"></script>
+  <script src="voice.js"></script>
+  <script src="chat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
